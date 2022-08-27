@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -12,13 +13,14 @@ app.use(express.json());
 
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vwx9p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = "mongodb+srv://repeter123:z39iGUCMLG5TfMdU@cluster0.5zgnm75.mongodb.net/?retryWrites=true&w=majority";
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
     try {
         await client.connect();
-        const serviceCollection = client.db('geniusCar').collection('service');
+        const serviceCollection = client.db('geniusCarRepeat123').collection('serviceRepeat123');
 
         app.get('/service', async (req, res) => {
             const query = {};
@@ -27,24 +29,24 @@ async function run() {
             res.send(services);
         });
 
-        app.get('/service/:id', async(req, res) =>{
+        app.get('/service/:id', async (req, res) => {
             const id = req.params.id;
-            const query={_id: ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const service = await serviceCollection.findOne(query);
             res.send(service);
         });
 
         // POST
-        app.post('/service', async(req, res) =>{
+        app.post('/service', async (req, res) => {
             const newService = req.body;
             const result = await serviceCollection.insertOne(newService);
             res.send(result);
         });
 
         // DELETE
-        app.delete('/service/:id', async(req, res) =>{
+        app.delete('/service/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const result = await serviceCollection.deleteOne(query);
             res.send(result);
         });
